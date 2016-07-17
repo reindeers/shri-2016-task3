@@ -1,0 +1,25 @@
+.layer_canvas__grey,
+.layer_canvas__noise,
+.layer_canvas__subs,
+.layer_canvas__scratches
+{
+    position: absolute;
+}
+.layer_canvas__noise
+{
+    z-index: 10;
+
+    opacity: .5;
+}
+.layer_canvas__subs
+{
+    z-index: 20;
+
+    opacity: 1;
+}
+.layer_canvas__scratches
+{
+    z-index: 30;
+
+    opacity: 1;
+}
