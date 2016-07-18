@@ -19,7 +19,7 @@ var browserSync = require('browser-sync').create();
 
 gulp.task('stylus', function(){
   return gulp.src('app/styl/*.styl')
-    .pipe(stylus()) // Converts Sass to CSS with gulp-sass
+    .pipe(stylus())
     .pipe(gulp.dest('app/css'))
     .pipe(browserSync.reload({
       stream: true
@@ -75,27 +75,26 @@ gulp.task('babel', function () {
 gulp.task('eslint', function() {
     return gulp.src(['app/js/*.js','!node_modules/**'])
         .pipe(eslint({
-          "env": {
-             "es6": false
-            },
+
+            "parser": "babel-eslint",
             "ecmaFeatures": {
-             "arrowFunctions": true,
-             "blockBindings": true,
-             "classes": true,
-             "defaultParams": true,
-             "destructuring": true,
-             "forOf": true,
-             "generators": false,
-             "modules": true,
-             "objectLiteralComputedProperties": true,
-             "objectLiteralDuplicateProperties": false,
-             "objectLiteralShorthandMethods": true,
-             "objectLiteralShorthandProperties": true,
-             "restParams": true,
-             "spread": true,
-             "superInFunctions": true,
-             "templateStrings": true,
-             "jsx": true
+               "arrowFunctions": true,
+               "blockBindings": true,
+               "classes": true,
+               "defaultParams": true,
+               "destructuring": true,
+               "forOf": true,
+               "generators": false,
+               "modules": true,
+               "objectLiteralComputedProperties": true,
+               "objectLiteralDuplicateProperties": false,
+               "objectLiteralShorthandMethods": true,
+               "objectLiteralShorthandProperties": true,
+               "restParams": true,
+               "spread": true,
+               "superInFunctions": true,
+               "templateStrings": true,
+               "jsx": true
             },
             "rules": {
              // require braces in arrow function body
@@ -125,13 +124,13 @@ gulp.task('eslint', function() {
              // suggest using arrow functions as callbacks
              "prefer-arrow-callback": 2,
              // suggest using of const declaration for variables that are never modified after declared
-             "prefer-const": 2,
+             "prefer-const": 1,
              // suggest using Reflect methods where applicable
              "prefer-reflect": 0,
              // suggest using the spread operator instead of .apply()
              "prefer-spread": 0,
              // suggest using template literals instead of strings concatenation
-             "prefer-template": 2,
+             "prefer-template": 1,
              // disallow generator functions that do not have yield
              "require-yield": 0,
              // Enforces getter/setter pairs in objects
