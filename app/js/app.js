@@ -56,6 +56,8 @@ let controls = controlEvents();
 let isFirstPlay = true;
 const videoTrack = document.querySelector('.videoPlayer');
 const audioTrack = document.createElement('audio');
+const containerMenu = document.querySelector('.menu-container');
+const containerVideo = document.querySelector('.video-player_container__hide');
 const buttonPlay = document.querySelector('.controls_button__play');
 const buttonPause = document.querySelector('.controls_button__pause');
 const buttonSubmit = document.querySelector('.controls_button__submit');
@@ -79,6 +81,8 @@ function _onButtonPauseClick() {
 };
 
 function _onButtonSubmitClick() {
+  containerMenu.classList.add('menu-container__hide');
+  containerVideo.classList.remove('video-player_container__hide');
   let vp = videoPlayer();
   vp.setPlayer(videoTrack, document.getElementsByClassName('controls_input')[0].value);
 
@@ -164,18 +168,12 @@ canvasScratches.style.top = videoTrack.getBoundingClientRect().top + 'px';
 canvasScratches.style.left = videoTrack.getBoundingClientRect().left + 'px';
 
 const makeItGrey = (vContext, rContext, video) => {
-    vContext.drawImage(video, 0, 0, w, h);
-    let pixelData = vContext.getImageData(0, 0, w, h);
-    for (let i = 0; i < pixelData.data.length; i += 4 ) {
-        let r = pixelData.data[i];
-        let g = pixelData.data[i + 1];
-        let b = pixelData.data[i + 2];
-        let averageColour = (r + g + b) / 3;
-        pixelData.data[i] = averageColour;
-        pixelData.data[i + 1] = averageColour;
-        pixelData.data[i + 2] = averageColour;
-    }
-    rContext.putImageData(pixelData, 0, 0);
+    rContext.drawImage(video, 0, 0, w, h);
+    let tmp = rContext.globalCompositeOperation;
+    rContext.globalCompositeOperation = "color"
+    rContext.fillStyle = "#FFFFFF";
+    rContext.fillRect(0, 0, w, h);
+    rContext.globalCompositeOperation = tmp;
 };
 
 const drawNoise = (vContext, rContext) => {
@@ -192,14 +190,16 @@ const drawNoise = (vContext, rContext) => {
 };
 
 const drawSubs = (msg, context) => {
+  let textWidth = context.measureText(msg).width;
   context.clearRect(0, 0, w, h);
-  context.font = "bold 14px sans";
+  context.font = "bold 24px sans";
   context.fillStyle = "#000000";
   context.rect(0, 0, w, h);
   context.fill();
   context.fillStyle = "#FFFFFF";
-  context.fillText(msg, 50, 50);
-  context.beginPath();
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillText(msg, (w/2) - (textWidth / 2), 100);
 };
 
 const deleteSubs = (context) => {
